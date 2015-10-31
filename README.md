@@ -5,6 +5,14 @@ This repository has all the base files ready for deploying a Heroku application,
 ## Usage
 https://daily-planet.herokuapp.com/ | https://git.heroku.com/daily-planet.git
 
+Creating postgresql-triangular-9570... done, (free)
+Adding postgresql-triangular-9570 to daily-planet... done
+Setting DATABASE_URL and restarting daily-planet... done, v4
+Database has been created and is available
+ ! This database is empty. If upgrading, you can transfer
+ ! data from another database with pgbackups:restore
+Use `heroku addons:docs heroku-postgresql` to view documentation.
+
 ### Initial
 
 ```bash
