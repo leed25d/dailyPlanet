@@ -3,6 +3,7 @@
 This repository has all the base files ready for deploying a Heroku application, including a simple database model managed with flask-sqlalchemy.
 
 ## Usage
+https://daily-planet.herokuapp.com/ | https://git.heroku.com/daily-planet.git
 
 ### Initial
 
