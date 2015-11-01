@@ -45,6 +45,16 @@ def not_found(error=None):
     resp.status_code = 404
     return resp
 
+@app.errorhandler(500)
+def server_error(error=None):
+    message = {
+            'status': 500,
+            'message': 'Srever Error: ' + str(request.json)
+    }
+    resp = jsonify(message)
+    resp.status_code = 500
+    return resp
+
 @app.errorhandler(400)
 def bad_request(error=None):
     message = {
@@ -85,6 +95,23 @@ def create_user():
 
     retcode= dict([('message','user %s created' % (request.json['userid']))])
     return(users_get(request.json['userid']), 201)
+
+@app.route('/users/<uid>', methods=['DELETE'])
+def delete_user(uid):
+    ##logging.warn( "delete_user() entered")
+    q= Users.query.filter(Users.userid == str(uid).lower())
+    if (q.count() == 0):
+        return not_found()
+    if (q.count() != 1):
+        return server_error()
+
+    db.session.delete(q.first())
+    if not try_commit():
+        logging.error( "delete_user() commit failed")
+        server_error(500)
+
+    retcode= dict([('message','user %s deleted' % (uid))])
+    return(jsonify(retcode), 200)
 
 
 if __name__ == '__main__':
