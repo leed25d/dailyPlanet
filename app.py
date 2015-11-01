@@ -65,6 +65,10 @@ def bad_request(error=None):
     resp.status_code = 400
     return resp
 
+########################################################################
+##  GET /users/<userid>
+##      Returns the matching user record or 404 if none exist.
+##----
 @app.route('/users/<uid>', methods=['GET'])
 def users_get(uid):
     q= Users.query.filter(Users.userid == str(uid).lower())
@@ -77,6 +81,12 @@ def users_get(uid):
     retcode['groups'] = [entry.group.name for entry in usr.groups ]
     return(jsonify(retcode))
 
+########################################################################
+##  POST /users
+##      Creates a new user record. The body of the request should be a valid user
+##      record. POSTs to an existing user should be treated as errors and flagged
+##      with the appropriate HTTP status code.
+##----
 @app.route('/users', methods=['POST'])
 def create_user():
     ##logging.warn( "create_user() entered")
@@ -96,6 +106,10 @@ def create_user():
     retcode= dict([('message','user %s created' % (request.json['userid']))])
     return(users_get(request.json['userid']), 201)
 
+########################################################################
+##  DELETE /users/<userid>
+##      Deletes a user record. Returns 404 if the user doesn't exist.
+##----
 @app.route('/users/<uid>', methods=['DELETE'])
 def delete_user(uid):
     ##logging.warn( "delete_user() entered")
@@ -113,6 +127,31 @@ def delete_user(uid):
     retcode= dict([('message','user %s deleted' % (uid))])
     return(jsonify(retcode), 200)
 
+########################################################################
+##  PUT /users/<userid>
+##      Updates an existing user record. The body of the request should be a valid
+##      user record. PUTs to a non-existant user should return a 404.
+##----
+########################################################################
+##  GET /groups/<group name>
+##      Returns a JSON list of userids containing the members of that group. Should
+##      return a 404 if the group doesn't exist.
+##----
+########################################################################
+##  POST /groups
+##      Creates a empty group. POSTs to an existing group should be treated as
+##      errors and flagged with the appropriate HTTP status code. The body should contain
+##      a `name` parameter
+##----
+########################################################################
+##  PUT /groups/<group name>
+##      Updates the membership list for the group. The body of the request should 
+##      be a JSON list describing the group's members.
+##----
+########################################################################
+##  DELETE /groups/<group name>
+##      Deletes a group.
+##----
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))
