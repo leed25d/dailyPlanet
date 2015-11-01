@@ -80,8 +80,8 @@ ALTER TABLE public.users OWNER TO lee;
 --
 
 CREATE TABLE users_groups (
-    users_id integer,
-    groups_id integer
+    users_id integer NOT NULL,
+    groups_id integer NOT NULL
 );
 
 
@@ -166,7 +166,7 @@ COPY users_groups (users_id, groups_id) FROM stdin;
 -- Name: users_id_seq; Type: SEQUENCE SET; Schema: public; Owner: lee
 --
 
-SELECT pg_catalog.setval('users_id_seq', 2, true);
+SELECT pg_catalog.setval('users_id_seq', 4, true);
 
 
 --
@@ -178,11 +178,27 @@ ALTER TABLE ONLY groups
 
 
 --
+-- Name: users_groups_pkey; Type: CONSTRAINT; Schema: public; Owner: lee; Tablespace: 
+--
+
+ALTER TABLE ONLY users_groups
+    ADD CONSTRAINT users_groups_pkey PRIMARY KEY (users_id, groups_id);
+
+
+--
 -- Name: users_pkey; Type: CONSTRAINT; Schema: public; Owner: lee; Tablespace: 
 --
 
 ALTER TABLE ONLY users
     ADD CONSTRAINT users_pkey PRIMARY KEY (id);
+
+
+--
+-- Name: users_userid_unique; Type: CONSTRAINT; Schema: public; Owner: lee; Tablespace: 
+--
+
+ALTER TABLE ONLY users
+    ADD CONSTRAINT users_userid_unique UNIQUE (userid);
 
 
 --
