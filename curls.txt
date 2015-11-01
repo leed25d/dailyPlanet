@@ -1,0 +1,13 @@
+##  should return 200 with a user object
+curl -i http://localhost:5000/users/jdoe
+
+##  should return 404
+curl -i http://localhost:5000/users/noone
+
+##  should return 201 with a new user record
+curl -i -H "Content-Type: application/json" -X POST \
+    -d '{"userid":"newuser", "first_name":"New", "last_name":"User"}' \
+    http://localhost:5000/users
+
+##  should return 401 with a Bad request
+curl -i -H "Content-Type: application/json" -X POST     -d '{"userid1":"newuser", "first_name":"New", "last_name":"User"}'     http://localhost:5000/users
