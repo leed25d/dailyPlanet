@@ -132,6 +132,30 @@ def delete_user(uid):
 ##      Updates an existing user record. The body of the request should be a valid
 ##      user record. PUTs to a non-existant user should return a 404.
 ##----
+@app.route('/users/<uid>', methods=['PUT'])
+def update_user(uid):
+    logging.warn( "update_user() entered.  uid= %s" % (uid))
+    if not request.json:
+        logging.error( "update_user() no parameter block found")
+        return bad_request()
+
+    q= Users.query.filter(Users.userid == str(uid).lower())
+    if (q.count() == 0):
+        return not_found()
+    if (q.count() != 1):
+        logging.error( "update_user() q.count()= %d" % (q.count()))
+        return server_error()
+
+    usr= q.first()
+    for key in ('last_name', 'first_name', 'userid'):
+        usr.__setattr__(key, request.json.get(key, usr.__dict__[key]))
+
+    if not try_commit():
+        logging.error( "update_user() commit failed")
+        server_error(500)
+        
+    return(users_get(usr.userid), 200)
+
 ########################################################################
 ##  GET /groups/<group name>
 ##      Returns a JSON list of userids containing the members of that group. Should
