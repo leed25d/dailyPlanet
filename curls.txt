@@ -29,3 +29,21 @@ curl -i -H "Content-Type: application/json" -X POST     \
 ##  should return 200 
 curl -i -X DELETE http://localhost:5000/users/newuser
 curl -i -X DELETE https://daily-planet.herokuapp.com/users/newuser
+
+
+##  should return 200 with a new user record
+##    --new first name
+curl -i -H "Content-Type: application/json" -X PUT \
+    -d '{"userid":"newuser", "first_name":"Newer", "last_name":"User"}' \
+    http://localhost:5000/users/newuser
+curl -i -H "Content-Type: application/json" -X PUT \
+    -d '{"userid":"newuser", "first_name":"Newer", "last_name":"User"}' \
+    https://daily-planet.herokuapp.com/users/newuser
+    
+##    --new userid
+curl -i -H "Content-Type: application/json" -X PUT \
+    -d '{"userid":"neweruser", "first_name":"Newer", "last_name":"User"}' \
+    http://localhost:5000/users/newuser
+curl -i -H "Content-Type: application/json" -X PUT \
+    -d '{"userid":"neweruser", "first_name":"Newer", "last_name":"User"}' \
+    https://daily-planet.herokuapp.com/users/newuser
