@@ -82,7 +82,7 @@ correctness.
 How To Run me
 =============
 
-This application requires no steps to implemenmt, it is running on Heroku here:
+This application requires no steps to implement, it is running on Heroku here:
 https://daily-planet.herokuapp.com/
 
 
