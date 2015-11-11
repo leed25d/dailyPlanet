@@ -35,6 +35,16 @@ class Groups(db.Model):
 def home():
     return render_template('index.html')
 
+@app.errorhandler(400)
+def bad_request(error=None):
+    message = {
+            'status': 400,
+            'message': 'Bad Request: ' + str(request.json),
+    }
+    resp = jsonify(message)
+    resp.status_code = 400
+    return resp
+
 @app.errorhandler(404)
 def not_found(error=None):
     message = {
@@ -49,20 +59,10 @@ def not_found(error=None):
 def server_error(error=None):
     message = {
             'status': 500,
-            'message': 'Srever Error: ' + str(request.json)
+            'message': 'Server Error: ' + str(request)
     }
     resp = jsonify(message)
     resp.status_code = 500
-    return resp
-
-@app.errorhandler(400)
-def bad_request(error=None):
-    message = {
-            'status': 400,
-            'message': 'Bad Request: ' + str(request.json),
-    }
-    resp = jsonify(message)
-    resp.status_code = 400
     return resp
 
 ########################################################################
@@ -161,21 +161,34 @@ def update_user(uid):
 ##      Returns a JSON list of userids containing the members of that group. Should
 ##      return a 404 if the group doesn't exist.
 ##----
+@app.route('/groups/<group_name>', methods=['GET'])
+def get_group(group_name):
+    logging.error( "get_group() entry")
+    server_error(500)
 ########################################################################
 ##  POST /groups
 ##      Creates a empty group. POSTs to an existing group should be treated as
 ##      errors and flagged with the appropriate HTTP status code. The body should contain
 ##      a `name` parameter
 ##----
+@app.route('/groups', methods=['POST'])
+def create_group():
+    server_error(500)
 ########################################################################
 ##  PUT /groups/<group name>
 ##      Updates the membership list for the group. The body of the request should 
 ##      be a JSON list describing the group's members.
 ##----
+@app.route('/groups/<group_name>', methods=['PUT'])
+def edit_group(group_name):
+    server_error(500)
 ########################################################################
 ##  DELETE /groups/<group name>
 ##      Deletes a group.
 ##----
+@app.route('/groups/<group_name>', methods=['DELETE'])
+def delete_group(group_name):
+    server_error(500)
 
 if __name__ == '__main__':
     port = int(os.environ.get('PORT', 5000))

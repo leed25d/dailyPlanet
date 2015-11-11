@@ -2,7 +2,6 @@
 curl -i http://localhost:5000/users/jdoe
 curl -i https://daily-planet.herokuapp.com/users/jdoe
 
-
 ##  should return 404
 curl -i http://localhost:5000/users/noone
 curl -i https://daily-planet.herokuapp.com/users/noone
@@ -43,7 +42,18 @@ curl -i -H "Content-Type: application/json" -X PUT \
 ##    --new userid
 curl -i -H "Content-Type: application/json" -X PUT \
     -d '{"userid":"neweruser", "first_name":"Newer", "last_name":"User"}' \
-    http://localhost:5000/users/newuser
+
+http://localhost:5000/users/newuser
 curl -i -H "Content-Type: application/json" -X PUT \
     -d '{"userid":"neweruser", "first_name":"Newer", "last_name":"User"}' \
     https://daily-planet.herokuapp.com/users/newuser
+
+##  should return 200 with a group object
+curl -i http://localhost:5000/groups/group1
+curl -i https://daily-planet.herokuapp.com/groups/group1
+
+##  should return 404
+curl -i http://localhost:5000/groups/nosuchgroup
+curl -i https://daily-planet.herokuapp.com/groups/nosuchgroup
+
+
