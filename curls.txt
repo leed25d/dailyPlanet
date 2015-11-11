@@ -42,13 +42,13 @@ curl -i -H "Content-Type: application/json" -X PUT \
 ##    --new userid
 curl -i -H "Content-Type: application/json" -X PUT \
     -d '{"userid":"neweruser", "first_name":"Newer", "last_name":"User"}' \
-
-http://localhost:5000/users/newuser
+    http://localhost:5000/users/newuser
+    
 curl -i -H "Content-Type: application/json" -X PUT \
     -d '{"userid":"neweruser", "first_name":"Newer", "last_name":"User"}' \
     https://daily-planet.herokuapp.com/users/newuser
 
-##  should return 200 with a group object
+##  should return server error
 curl -i http://localhost:5000/groups/group1
 curl -i https://daily-planet.herokuapp.com/groups/group1
 
